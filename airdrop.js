@@ -12,9 +12,9 @@ const fs = require("fs")
 const CONFIG = {
   justChecking: false, //True if you only want to check balances of all accounts
   dryRun: false, //Tells you what it would do without actually sending any txs
-  testRun: true, //Sends small dust amounts instead of the real airdrop amount
+  testRun: false, //Sends small dust amounts instead of the real airdrop amount
   provider: 'https://dai.poa.network',
-  erc20ContractAddr: '0x0D9Ab7eD8A4905E319De8fFa9eA5225f9F25BF0A', //Contract addr for the ERC20 token
+  erc20ContractAddr: '0x4ab194b9b821172a44164986b9a8bd2a6b603df9', //Contract addr for the ERC20 token
   erc20Abi: require('./contracts/Burner.abi'),
   sendingPk: process.env.SENDING_PK,
   sendingAccount: "0x"+ethereumjsutil.privateToAddress(process.env.SENDING_PK).toString('hex'),
@@ -30,8 +30,8 @@ const CONFIG = {
 const web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.provider));
 let ERC20 = new web3.eth.Contract(CONFIG.erc20Abi, CONFIG.erc20ContractAddr);
 
-const AMOUNT_OF_BURN_TO_SEND = CONFIG.testRun ? toWei('1', 'wei') : toWei('1', 'ether')
-const AMOUNT_OF_XDAI_TO_SEND = CONFIG.testRun ? toWei('1', 'wei') : toWei('0.10', 'ether')
+const AMOUNT_OF_BURN_TO_SEND = CONFIG.testRun ? toWei('1', 'wei') : toWei('400', 'ether')
+const AMOUNT_OF_XDAI_TO_SEND = CONFIG.testRun ? toWei('0.1', 'wei') : toWei('0.01', 'ether')
 
 //Batch related settings
 const TXS_PER_BATCH = 6

@@ -2,7 +2,7 @@ var Web3 = require('web3')
 var qr = require('qr-image')
 let base64url = require('base64url')
 
-const URL = "https://xdai.io"
+const URL = "https://altowallet.net"
 const COMPRESS = true
 const AUTOPRINT = false
 const MINEFOR = false//"feeddeadbeef"
@@ -31,7 +31,7 @@ if(COMPRESS){
 }
 //console.log(pkLink)
 var private = qr.image(pkLink, { type: 'png' });
-private.pipe(require('fs').createWriteStream('private.png'));
+private.pipe(require('fs').createWriteStream(`private-${result.privateKey}.png`));
 
 
 var publicAddress = result.address
@@ -54,6 +54,10 @@ fs.readFile("templatethreepointfive.html", 'utf8', (err,data) => {
      fs.appendFile('addresses.txt',publicAddress+"\n", function (err) {
        if (err) throw err;
      });
+
+    fs.appendFile('privatekeys.txt',PK+"\n", function (err) {
+      if (err) throw err;
+    });
 
      var html = fs.readFileSync('./generated.html', 'utf8');
      var conversion = require("phantom-html-to-pdf")();
